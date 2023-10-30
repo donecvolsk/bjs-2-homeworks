@@ -6,15 +6,13 @@ class AlarmClock {
     //Добавляет новый звонок в коллекцию существующих
     addClock(timeStart, callback) {
 
-        if(timeStart.length === 0 || typeof callback != 'function') {
-            throw new Error('Отсутствуют обязательные аргументы');
+        if(!timeStart || !callback) {
+            throw new Error('Отсутствуют обязательные аргументы');  
          } 
-        
-        for (let i = 0; i < this.alarmCollection.length; i++) {
-            if(timeStart === this.alarmCollection[i].time){
-                console.warn('Уже присутствует звонок на это же время');
-            }          
-        }
+
+        if(this.alarmCollection.some(item => item.time === timeStart)) {
+            console.warn('Уже присутствует звонок на это же время');
+          }
 
             this.alarmCollection.push({
             callback: callback,
@@ -74,8 +72,8 @@ class AlarmClock {
     }
 }
 
-/*let clock;
-clock = new AlarmClock();
+
+/*let clock = new AlarmClock();
 const callback = f => f;
 clock.addClock("16:45", callback);*/
 
